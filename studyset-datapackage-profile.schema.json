@@ -1,0 +1,239 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "Studyset Data Package",
+  "description": "Data exchange format for sets of scientific studies",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "https://frictionlessdata.io/schemas/data-package.json"
+    },
+    {
+      "required": [
+        "title",
+        "profile",
+        "created",
+        "studyCount",
+        "contributors",
+        "studies"
+      ],
+      "properties": {
+        "profile": {
+          "description": "See [Data Package specification](https://specs.frictionlessdata.io/data-package/#profile). Study Data Package  requires this to be the URL of the used Studyset Data Package Profile version (e.g. `https://raw.githubusercontent.com/zac215/studyset-data-package/v1.0/studyset-data-package-profile.schema.json`).",
+          "format": "uri"
+        },
+        "language": {
+          "description": "Language in which the Data Package properties are given"
+        },
+        "created": {
+          "description": "See [Data Package specification](https://specs.frictionlessdata.io/data-package/#created). "
+        },
+        "studyCount": {
+          "description": "The number of studies covered by the Data Package",
+          "type": "integer"
+        },
+        "contributors": {
+          "description": "See [Data Package specification](https://specs.frictionlessdata.io/data-package/#contributors). ",
+          "minItems":1
+        },
+        "resources": {
+          "description": "See [Data Package specification](https://specs.frictionlessdata.io/data-package/#resource-information)."
+        },
+
+        "studies": {
+          "description": "Studies that originated the package",
+          "type": "array",
+          "minItems":1,
+          "items": {
+            "type": "object",
+            "required": [
+              "title",
+              "studyStartYear",
+              "license",
+              "authors",
+              "researchFields",
+              "keywords",
+              "objectives",
+              "methodologies",
+              "results",
+              "recommendations"
+            ],
+            "properties": {
+              "title": {
+                "description": "Title of the study",
+                "type": "string"
+              },
+              "studyStartYear": {
+                "description": "Year when the study commenced",
+                "type": "integer"
+              },
+              "license": {
+                "description": "License under which the data and metadata for the study are provided",
+                "type": "object",
+                "required": ["name", "url"],
+                "properties": {
+                  "name": {
+                    "description": "Name of the license",
+                    "type": "string"
+                  },
+                  "url": {
+                    "description": "URL pointing to the official description of the license",
+                    "type": "string"
+                  }
+                }
+              },
+              "authors": {
+                "description": "Authors of the study",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["name", "affiliation"],
+                  "properties": {
+                    "name": {
+                      "description": "Full name of the author",
+                      "type": "string"
+                    },
+                    "orcid": {
+                      "description": "The ORCID identifier of the author",
+                      "type": "string"
+                    },
+                    "affiliation": {
+                      "description": "Affiliation the author",
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "researchFields": {
+                "description": "The research fields to which the study belongs",
+                "type": "array",
+                "items": {
+                  "title": "string"
+                }
+              },
+
+              "keywords": {
+                "description": "Keywords which indentify the study.",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "affectedAreas": {
+                "description": "List of geographical areas affected by the study",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["name", "type"],
+                  "properties": {
+                    "name": {
+                      "description": "Name of the area",
+                      "type": "string"
+                    },
+                    "type": {
+                      "description": "Type of the area",
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "objectives": {
+                "description": "Objectives the study.",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "methodologies": {
+                "description": "Methodologies used in the study.",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "results": {
+                "description": "Results of the the study.",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "recommendations": {
+                "description": "Recommendations derived from the study",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+
+              "relatedPublication": {
+                "description": "A list of publications related to the study.",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["identifier", "identifierType", "relationType"],
+                  "properties": {
+                    "identifier": {
+                      "description": "Identifier of the publication",
+                      "type": "string"
+                    },
+                    "identifierType": {
+                      "description": "Type of the provided publication identifier",
+                      "type": "string"
+                    },
+                    "relationType": {
+                      "description": "Type of relation between the study and the publication",
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "dataSource": {
+                "description": "Files containing data used or produced during the study",
+                "type": "array",
+                "items": {
+                  "required": ["title", "path"],
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "CollectionMethods": {
+                      "description": "Methods use to gather the data",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+
+                "contributors": {
+                  "description": "List of persons and organizations that contributed to the study",
+                  "type": "array",
+                  "items": {
+                    "required": ["name", "role"],
+                    "properties": {
+                      "name": {
+                        "description": "Name of the contributor",
+                        "type": "string"
+                      },
+                      "role": {
+                        "description": "Role of the contributor",
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
